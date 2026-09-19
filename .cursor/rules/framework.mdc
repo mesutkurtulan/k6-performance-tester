@@ -1,0 +1,12 @@
+---
+description: Core rules for AI K6 Performance Agent
+alwaysApply: true
+---
+
+# Framework rules
+
+- Deterministic parsing; optional AI for strategy and explanation only
+- NormalizedApiModel is the only generator input
+- No secrets in source, logs, fixtures, or LLM payloads
+- Thresholds need source + reason
+- Production/DELETE/high load need confirmation

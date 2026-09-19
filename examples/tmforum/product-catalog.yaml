@@ -1,0 +1,87 @@
+openapi: 3.0.3
+info:
+  title: TM Forum Product Catalog (synthetic example)
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:4010
+paths:
+  /productCatalogManagement/v1/catalog:
+    get:
+      tags: [ProductCatalog]
+      summary: List catalogs
+      responses:
+        "200":
+          description: ok
+    post:
+      tags: [ProductCatalog]
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Retail catalog
+              lifecycleStatus: Active
+      responses:
+        "201":
+          description: created
+  /productCatalogManagement/v1/category:
+    get:
+      tags: [ProductCategory]
+      responses:
+        "200":
+          description: ok
+    post:
+      tags: [ProductCategory]
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Devices
+              isRoot: true
+      responses:
+        "201":
+          description: created
+  /productCatalogManagement/v1/productOffering:
+    get:
+      tags: [ProductOffering]
+      responses:
+        "200":
+          description: ok
+    post:
+      tags: [ProductOffering]
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: Fiber 100
+              lifecycleStatus: Active
+      responses:
+        "201":
+          description: created
+  /productCatalogManagement/v1/productOffering/{id}:
+    get:
+      tags: [ProductOffering]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ok
+    patch:
+      tags: [ProductOffering]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            example:
+              lifecycleStatus: Retired
+      responses:
+        "200":
+          description: ok

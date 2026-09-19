@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: Petstore
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:4010
+security:
+  - bearerAuth: []
+paths:
+  /products:
+    get:
+      operationId: listProducts
+      summary: List products
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ok
+    post:
+      operationId: createProduct
+      summary: Create product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+            example:
+              name: Widget
+              price: 9.99
+      responses:
+        "201":
+          description: created
+          links:
+            GetProductById:
+              operationId: getProduct
+              parameters:
+                id: "$response.body#/id"
+  /products/{id}:
+    get:
+      operationId: getProduct
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ok
+        "404":
+          description: missing
+    patch:
+      operationId: updateProduct
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        "200":
+          description: ok
+    delete:
+      operationId: deleteProduct
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: deleted
+  /secure/products:
+    get:
+      operationId: listSecure
+      responses:
+        "200":
+          description: ok
+        "401":
+          description: unauthorized
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Product:
+      type: object
+      required: [name, price]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: number

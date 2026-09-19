@@ -1,0 +1,60 @@
+ai:
+  provider: disabled
+  tier: balanced
+  models:
+    fast: gpt-4.1-mini
+    balanced: gpt-4.1
+    advanced: gpt-4.1
+
+performance:
+  defaultRate: 10
+  defaultDuration: 5m
+  defaultVUs: 5
+  p95Ms: 500
+  errorRate: 0.01
+
+safety:
+  maxVUs: 100
+  maxRate: 500
+  maxDuration: 30m
+  productionRequiresConfirmation: true
+  destructiveEndpointsRequireConfirmation: true
+
+reporting:
+  formats:
+    - html
+    - markdown
+    - json
+  directory: reports
+
+k6:
+  bin: k6
+  timeoutMs: 600000
+  dockerImage: grafana/k6:latest
+
+# Optional. Core runs without Grafana/Influx/Prometheus.
+observability:
+  prometheusRemoteWrite: false
+
+baselines:
+  directory: .agent/baselines
+  autoSave: true
+  autoCompare: false
+  tolerancePct: 10
+
+environments:
+  dev:
+    baseUrl: http://127.0.0.1:4010
+    production: false
+  test:
+    baseUrl: http://127.0.0.1:4010
+    production: false
+  uat:
+    baseUrl: https://uat.example.com
+    production: false
+  staging:
+    baseUrl: https://staging.example.com
+    production: false
+  production:
+    baseUrl: https://api.example.com
+    production: true

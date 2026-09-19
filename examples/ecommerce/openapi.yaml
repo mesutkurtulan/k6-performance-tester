@@ -1,0 +1,47 @@
+openapi: 3.0.3
+info:
+  title: Ecommerce API
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:4010
+paths:
+  /products:
+    get:
+      tags: [products]
+      responses:
+        "200":
+          description: ok
+    post:
+      tags: [products]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: Shoes
+              price: 79
+      responses:
+        "201":
+          description: created
+  /carts:
+    post:
+      tags: [carts]
+      requestBody:
+        content:
+          application/json:
+            example:
+              items: [{ productId: "1", qty: 1 }]
+      responses:
+        "201":
+          description: created
+  /orders:
+    post:
+      tags: [orders]
+      requestBody:
+        content:
+          application/json:
+            example:
+              cartId: "1"
+      responses:
+        "201":
+          description: created

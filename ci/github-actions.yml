@@ -1,0 +1,20 @@
+name: k6 performance
+on:
+  workflow_dispatch:
+  pull_request:
+jobs:
+  perf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - uses: grafana/setup-k6-action@v1
+      - run: npx k6-agent generate examples/openapi/petstore.yaml --type smoke --out generated-tests --yes
+      - run: npx k6-agent run generated-tests/smoke/main.js --report html,markdown,json,junit --yes
+      - name: Publish summary
+        if: always()
+        run: cat reports/github-summary.md >> "$GITHUB_STEP_SUMMARY" || true

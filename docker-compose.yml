@@ -1,0 +1,14 @@
+services:
+  agent:
+    build: .
+    working_dir: /app
+    volumes:
+      - ./:/workspace
+    command: ["doctor"]
+  mock-api:
+    build: .
+    command: ["node", "dist/mock-api/cli.js"]
+    ports:
+      - "4010:4010"
+    environment:
+      PORT: 4010

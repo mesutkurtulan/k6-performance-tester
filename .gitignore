@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+.env
+.agent/
+generated-tests/
+reports/*.html
+reports/*.json
+reports/*.md
+reports/*.xml
+reports/*.csv
+*.log
+.DS_Store
+.idea/
+.vscode/
+!reports/.gitkeep
